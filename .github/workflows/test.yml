@@ -9,15 +9,20 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  powershell7:
     runs-on: windows-latest
     timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        shell: [pwsh, powershell]
     steps:
       - uses: actions/checkout@v4
-      - name: Parse and test without system changes
-        shell: ${{ matrix.shell }}
+      - name: Test PowerShell 7 without system changes
+        shell: pwsh
+        run: ./tests/Run-Tests.ps1
+
+  powershell51:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Windows PowerShell 5.1 without system changes
+        shell: powershell
         run: ./tests/Run-Tests.ps1
