@@ -1,0 +1,23 @@
+name: PowerShell tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        shell: [pwsh, powershell]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse and test without system changes
+        shell: ${{ matrix.shell }}
+        run: ./tests/Run-Tests.ps1
